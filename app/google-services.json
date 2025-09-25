@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "214921501434",
+    "project_id": "prueba-7656f",
+    "storage_bucket": "prueba-7656f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214921501434:android:56a6162d3be4b6b5f68743",
+        "android_client_info": {
+          "package_name": "com.calyrsoft.ucbp1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx8Ipwee2QENKUh6XC0PX8uBV5DP91VNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
