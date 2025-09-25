@@ -9,7 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import kotlin.text.format
 
 @Composable
 fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
@@ -23,6 +29,7 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
             is DollarViewModel.DollarUIState.Error -> Text(stateValue.message)
             DollarViewModel.DollarUIState.Loading -> CircularProgressIndicator()
             is DollarViewModel.DollarUIState.Success -> {
+                Text("Fecha de Actualizacion: 25/09/2025")
                 Text("Oficial")
                 Text(stateValue.data.dollarOfficial!!)
                 Text("Paralelo")
@@ -31,6 +38,9 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
                 Text(stateValue.data.usdtPriceBs!!)
                 Text("USDC a Bs")
                 Text(stateValue.data.usdcPriceBs!!)
+
+
+
             }
         }
     }

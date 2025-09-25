@@ -1,5 +1,6 @@
 package com.calyrsoft.ucbp1.features.dollar.presentation
 
+import android.R.attr.data
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,7 +40,8 @@ class DollarViewModel(
     fun getDollar() {
         viewModelScope.launch(Dispatchers.IO) {
             fetchDollarUseCase.invoke().collect {
-                    data -> _uiState.value = DollarUIState.Success(data) }
+                    //data -> _uiState.value = DollarUIState.Success(data)
+                data-> _uiState.value = DollarUIState.Success(data)}
         }
     }
 
