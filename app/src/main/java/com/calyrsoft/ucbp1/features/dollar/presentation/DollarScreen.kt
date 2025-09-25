@@ -139,7 +139,7 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
 
 @Preview(showBackground = true)
 @Composable
-fun SimpleDollarScreenWithColorPreview() {
+fun SimpleDollarScreen() {
     MaterialTheme {
         val previewData = com.calyrsoft.ucbp1.features.dollar.domain.model.DollarModel(
             dollarOfficial = "6.96",
