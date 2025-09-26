@@ -10,17 +10,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.calyrsoft.ucbp1.features.movies.domain.model.MovieModel
+import com.calyrsoft.ucbp1.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
     vm: MoviesViewModel = koinViewModel(),
     onBack: () -> Unit = {}
 ) {
+
     val state by vm.state.collectAsState()
 
     LaunchedEffect(Unit) { vm.load() }
@@ -32,6 +36,14 @@ fun MovieScreen(
                 title = { Text("Películas") },
                 navigationIcon = {
                     TextButton(onClick = onBack) { Text("← Atrás") }
+                },
+                actions = {
+                    TextButton(onClick = { navController.navigate(Screen.Dollar.route) }) {
+                        Text("Dollar")
+                    }
+                    TextButton(onClick = { navController.navigate(Screen.Github.route) }) {
+                        Text("Github")
+                    }
                 }
             )
         }

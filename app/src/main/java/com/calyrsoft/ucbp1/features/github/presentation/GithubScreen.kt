@@ -5,52 +5,44 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.calyrsoft.ucbp1.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GithubScreen( modifier: Modifier,
-                  vm : GithubViewModel = koinViewModel()
-                  ) {
-
+fun GithubScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    vm : GithubViewModel = koinViewModel()
+) {
     var nickname by remember { mutableStateOf("") }
-
     val state by vm.state.collectAsState()
 
     Column {
-        Text("")
+        // Buscador de usuario
         OutlinedTextField(
             value = nickname,
-            onValueChange = {
-                    it -> nickname = it
-            }
+            onValueChange = { nickname = it },
+            label = { Text("GitHub Nickname") }
         )
-        OutlinedButton( onClick = {
+        OutlinedButton(onClick = {
             vm.fetchAlias(nickname)
         }) {
-            Text("")
+            Text("Buscar")
         }
-        when( val st = state) {
-            is GithubViewModel.GithubStateUI.Error -> {
-                Text(st.message )
-            }
-            GithubViewModel.GithubStateUI.Init -> {
-                Text("Init" )
-            }
-            GithubViewModel.GithubStateUI.Loading -> {
-                Text("Loading" )
-            }
+
+        // Estados de la UI
+        when(val st = state) {
+            is GithubViewModel.GithubStateUI.Error -> Text(st.message)
+            GithubViewModel.GithubStateUI.Init -> Text("Ingrese un usuario de GitHub")
+            GithubViewModel.GithubStateUI.Loading -> Text("Cargando...")
             is GithubViewModel.GithubStateUI.Success -> {
-                Text(st.github.nickname )
+                Text(st.github.nickname)
                 AsyncImage(
                     model = st.github.pathUrl,
                     contentDescription = null,
@@ -59,6 +51,14 @@ fun GithubScreen( modifier: Modifier,
                 )
                 Text(st.github.pathUrl)
             }
+        }
+
+        // Navegación a otras pantallas
+        OutlinedButton(onClick = { navController.navigate(Screen.PopularMovies.route) }) {
+            Text("Ir a Películas")
+        }
+        OutlinedButton(onClick = { navController.navigate(Screen.Dollar.route) }) {
+            Text("Ir a Dólar")
         }
     }
 }

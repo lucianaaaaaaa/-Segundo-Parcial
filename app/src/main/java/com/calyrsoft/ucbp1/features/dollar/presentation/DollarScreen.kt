@@ -19,12 +19,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.calyrsoft.ucbp1.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
+fun DollarScreen(
+    navController: NavController,
+    viewModelDollar: DollarViewModel = koinViewModel()) {
     val state = viewModelDollar.uiState.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -134,6 +139,20 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
             }
         }
     }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        androidx.compose.material3.Button(onClick = { navController.navigate(Screen.PopularMovies.route) }) {
+            Text("Ir a Movies")
+        }
+        androidx.compose.material3.Button(onClick = { navController.navigate(Screen.Github.route) }) {
+            Text("Ir a Github")
+        }
+    }
+
 }
 
 

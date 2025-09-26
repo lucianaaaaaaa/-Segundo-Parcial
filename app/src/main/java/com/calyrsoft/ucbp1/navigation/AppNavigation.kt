@@ -15,30 +15,24 @@ import com.calyrsoft.ucbp1.features.profile.application.ProfileScreen
 fun AppNavigation() {
     val navController: NavHostController = rememberNavController()
 
-
     NavHost(
         navController = navController,
         startDestination = Screen.PopularMovies.route
     ) {
         composable(Screen.Github.route) {
-            GithubScreen(modifier = Modifier)
+            GithubScreen(navController = navController)
         }
-        composable(Screen.Home.route) {
-
-
+        composable(Screen.Dollar.route) {
+            DollarScreen(navController = navController)
+        }
+        composable(Screen.PopularMovies.route) {
+            MovieScreen(navController = navController)
         }
         composable(Screen.Profile.route) {
             ProfileScreen()
         }
-
-
-        composable(Screen.Dollar.route) {
-            DollarScreen()
+        composable(Screen.Home.route) {
         }
-
-        composable(Screen.PopularMovies.route) {
-            MovieScreen()
-        }
-
     }
 }
+

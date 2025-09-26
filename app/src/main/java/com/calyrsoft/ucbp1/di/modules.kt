@@ -98,9 +98,12 @@ val appModule = module {
     }
 
 
+
+
     single<MovieService> {
         get<Retrofit>(named(NetworkConstants.RETROFIT_MOVIE)).create(MovieService::class.java)
     }
+
     single { MovieRemoteDataSource(get(), get(named("apiKey"))) }
 
     single {
