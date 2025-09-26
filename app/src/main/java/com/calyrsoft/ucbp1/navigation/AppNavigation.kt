@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.calyrsoft.ucbp1.features.dollar.presentation.DollarScreen
 import com.calyrsoft.ucbp1.features.github.presentation.GithubScreen
-import com.calyrsoft.ucbp1.features.movie.presentation.PopularMoviesScreen
+import com.calyrsoft.ucbp1.features.movies.presentation.MovieScreen
 import com.calyrsoft.ucbp1.features.profile.application.ProfileScreen
 
 @Composable
@@ -37,7 +37,7 @@ fun AppNavigation() {
         }
 
         composable(Screen.PopularMovies.route) {
-            PopularMoviesScreen()
+            MovieScreen()
         }
 
     }

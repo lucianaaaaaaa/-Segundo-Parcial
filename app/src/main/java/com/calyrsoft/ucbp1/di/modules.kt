@@ -1,5 +1,7 @@
 package com.calyrsoft.ucbp1.di
 
+import android.app.Application
+import androidx.room.Room
 import com.calyrsoft.ucbp1.R
 import com.calyrsoft.ucbp1.features.dollar.data.datasource.RealTimeRemoteDataSource
 import com.calyrsoft.ucbp1.features.dollar.data.repository.DollarRepository
@@ -12,12 +14,15 @@ import com.calyrsoft.ucbp1.features.github.data.repository.GithubRepository
 import com.calyrsoft.ucbp1.features.github.domain.repository.IGithubRepository
 import com.calyrsoft.ucbp1.features.github.domain.usecase.FindByNickNameUseCase
 import com.calyrsoft.ucbp1.features.github.presentation.GithubViewModel
-import com.calyrsoft.ucbp1.features.movie.data.api.MovieService
-import com.calyrsoft.ucbp1.features.movie.data.datasource.MovieRemoteDataSource
-import com.calyrsoft.ucbp1.features.movie.data.repository.MovieRepository
-import com.calyrsoft.ucbp1.features.movie.domain.repository.IMoviesRepository
-import com.calyrsoft.ucbp1.features.movie.domain.usecase.FetchPopularMoviesUseCase
-import com.calyrsoft.ucbp1.features.movie.presentation.PopularMoviesViewModel
+import com.calyrsoft.ucbp1.features.movies.data.api.MovieService
+import com.calyrsoft.ucbp1.features.movies.data.datasource.MovieRemoteDataSource
+import com.calyrsoft.ucbp1.features.movies.data.repository.MovieRepository
+import com.calyrsoft.ucbp1.features.movies.data.database.AppRoomDatabaseMovies
+import com.calyrsoft.ucbp1.features.movies.data.database.dao.IMovieDao
+import com.calyrsoft.ucbp1.features.movies.data.datasource.MovieLocalDataSource
+import com.calyrsoft.ucbp1.features.movies.domain.repository.IMovieRepository
+import com.calyrsoft.ucbp1.features.movies.domain.usecase.GetPopularMoviesUseCase
+import com.calyrsoft.ucbp1.features.movies.presentation.MoviesViewModel
 import com.calyrsoft.ucbp1.features.profile.application.ProfileViewModel
 import com.calyrsoft.ucbp1.features.profile.data.repository.ProfileRepository
 import com.calyrsoft.ucbp1.features.profile.domain.repository.IProfileRepository
@@ -71,6 +76,7 @@ val appModule = module {
             .build()
     }
 
+
     // GithubService
     single<GithubService> {
         get<Retrofit>(named(NetworkConstants.RETROFIT_GITHUB)).create(GithubService::class.java)
@@ -91,13 +97,25 @@ val appModule = module {
         androidApplication().getString(R.string.api_key)
     }
 
+
     single<MovieService> {
         get<Retrofit>(named(NetworkConstants.RETROFIT_MOVIE)).create(MovieService::class.java)
     }
     single { MovieRemoteDataSource(get(), get(named("apiKey"))) }
-    single<IMoviesRepository> { MovieRepository(get()) }
-    factory { FetchPopularMoviesUseCase(get()) }
-    viewModel { PopularMoviesViewModel(get()) }
+
+    single {
+        Room.databaseBuilder(
+            androidApplication() as Application,
+            AppRoomDatabaseMovies::class.java,
+            "movies.db"
+        ).build()
+    }
+    single<IMovieDao> { get<AppRoomDatabaseMovies>().movieDao() }
+    single { MovieLocalDataSource(get()) }
+
+    single<IMovieRepository> { MovieRepository(get(), get()) }
+    factory { GetPopularMoviesUseCase(get()) }
+    viewModel { MoviesViewModel(get())}
 
     single{ RealTimeRemoteDataSource() }
     single<IDollarRepository> { DollarRepository(get()) }

@@ -1,7 +1,7 @@
 package com.calyrsoft.ucbp1.features.profile.domain.model.vo
 
-import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 
 class ProfileCellphoneTest {

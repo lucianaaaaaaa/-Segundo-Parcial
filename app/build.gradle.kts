@@ -48,6 +48,9 @@ dependencies {
 
     implementation(libs.firebase.database)
     implementation(libs.firebase.messaging)
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -75,4 +78,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(kotlin("test"))
 }
